@@ -11,6 +11,7 @@ namespace _30seconds.Models
 
         public List<string> Words { get; set; }
         public DateTime Start { get; set; }
+        public string User { get; set; }
 
     }
 }

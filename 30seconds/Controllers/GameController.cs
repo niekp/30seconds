@@ -31,7 +31,7 @@ namespace _30seconds.Controllers
             }.OrderBy(x => Guid.NewGuid()).Take(Amount).ToList();
         }
 
-        public Game GetGame(bool forceNew = false)
+        public Game GetGame(string User, bool forceNew = false)
         {
             Game game = null;
             if (System.IO.File.Exists(_filename) && !forceNew)
@@ -45,7 +45,8 @@ namespace _30seconds.Controllers
                 game = new Game()
                 {
                     Words = GetWords(5),
-                    Start = DateTime.Now
+                    Start = DateTime.Now,
+                    User = User
                 };
 
                 var json = JsonConvert.SerializeObject(game, Formatting.Indented);
