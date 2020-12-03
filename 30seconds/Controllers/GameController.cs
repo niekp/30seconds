@@ -17,18 +17,9 @@ namespace _30seconds.Controllers
 
         private List<string> GetWords(int Amount = 5)
         {
-            return new string[]{
-                "woord 1",
-                "woord 2",
-                "woord 3",
-                "woord 4",
-                "woord 5",
-                "woord 6",
-                "woord 7",
-                "woord 8",
-                "woord 9",
-                "woord 10",
-            }.OrderBy(x => Guid.NewGuid()).Take(Amount).ToList();
+            var words = System.IO.File.ReadAllLines("woordenlijst.txt");
+
+            return words.OrderBy(x => Guid.NewGuid()).Take(Amount).ToList();
         }
 
         public Game GetGame(string User, bool forceNew = false)

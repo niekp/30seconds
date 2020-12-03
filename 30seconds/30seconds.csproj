@@ -8,4 +8,10 @@
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
   </ItemGroup>
+  <ItemGroup>
+    <None Remove="woordenlijst.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="woordenlijst.txt" />
+  </ItemGroup>
 </Project>
