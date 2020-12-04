@@ -20,6 +20,7 @@ namespace _30seconds
             Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
+                    webBuilder.UseUrls(urls: "http://localhost:5007");
                     webBuilder.UseStartup<Startup>();
                 });
     }
