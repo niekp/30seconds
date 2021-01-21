@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace _30seconds.Models
 {
@@ -17,6 +18,7 @@ namespace _30seconds.Models
 
         public int IdRoom { get; set; }
 
+        [JsonIgnore]
         [ForeignKey(nameof(IdRoom))]
         public virtual Room Room { get; set; }
 

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace _30seconds.Models
 {
@@ -17,8 +18,10 @@ namespace _30seconds.Models
         [Key]
         public int Id { get; set; }
 
+        [JsonIgnore]
         public int IdWordlist { get; set; }
 
+        [JsonIgnore]
         [ForeignKey(nameof(IdWordlist))]
         public virtual Wordlist Wordlist { get; set; }
 
