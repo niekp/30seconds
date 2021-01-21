@@ -1,26 +1,49 @@
-﻿@model List<Room>
+﻿@model LobbyViewModel
 @{
-    ViewData["Title"] = "30 Seconds";
+	ViewData["Title"] = "30 Seconds";
 }
 
 <h1>Kamers</h1>
 
 <div class="room-container">
-    @foreach (var room in Model)
-    {
-        <div class="card" style="width: 18rem;">
-            <div class="card-body">
-                <h5 class="card-title">@room.Name</h5>
-                <p class="card-text">
-                    Aangemaakt: @room.Created.ToString("HH:mm")
-                    Aantal rondes: @room.Games.Count()<br />
-                    @if (room.Games.Any())
-                    {
-                        <span>Laatste ronde: @room.Games.OrderBy(g => g.Start).LastOrDefault()?.Start.ToString("HH:mm:ss")</span><br />
-                    }
-                </p>
-                <a asp-action="Game" asp-route-id="@room.Id" class="card-link stretched-link">Meedoen</a>
-            </div>
-        </div>
-    }
+	@foreach (var room in Model.Rooms) {
+		<div class="card" style="width: 18rem;">
+			<div class="card-body">
+				<h5 class="card-title">@room.Name</h5>
+				<p class="card-text">
+					Aangemaakt: @room.Created.ToString("HH:mm")
+					Aantal rondes: @room.Games.Count()<br />
+					@if (room.Games.Any()) {
+						<span>Laatste ronde: @room.Games.OrderBy(g => g.Start).LastOrDefault()?.Start.ToString("HH:mm:ss")</span><br />
+					}
+				</p>
+				<a asp-action="Game" asp-route-id="@room.Id" class="card-link stretched-link">Meedoen</a>
+			</div>
+		</div>
+	}
 </div>
+
+@using (Html.BeginForm()) {
+	<div class="mb-3">
+		<label asp-for="NewRoom.Name" class="form-label"></label>
+		<input asp-for="NewRoom.Name" class="form-control" />
+	</div>
+
+	<div class="mb-3">
+		<label asp-for="NewRoom.AmountOfSeconds" class="form-label"></label>
+		<input asp-for="NewRoom.AmountOfSeconds" class="form-control" />
+	</div>
+
+	<div class="mb-3">
+		<label asp-for="NewRoom.IdWordlist" class="form-label"></label>
+		<select class="form-select" asp-for="NewRoom.IdWordlist" asp-items="Model.Wordlists.Select(l => new SelectListItem() {
+			Text = l.Title,
+			Value = l.Id.ToString()
+		})">
+		</select>
+	</div>
+
+	<div class="mb-3">
+		<input type="submit" value="Open kamer" class="btn btn-primary" />
+	</div>
+}

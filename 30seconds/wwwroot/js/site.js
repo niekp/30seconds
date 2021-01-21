@@ -1,6 +1,7 @@
 ﻿(function ($) {
     var $words = $("[data-id='words']"),
-        $timer = $("[data-id='timer']");
+        $timer = $("[data-id='timer']"),
+        IdRoom = $("[data-id='room-id']").val();
 
     $(document).ready(function () {
         $("[data-trigger='new-round']").on('click', newRound);
@@ -32,7 +33,7 @@
     }
 
     function getGame(forceNew = false, callback) {
-        $.getJSON("/Game/GetGame/?user=" + getUser() + "&forceNew=" + forceNew, function (game) {
+        $.getJSON("/Game/GetGame/?user=" + getUser() + "&IdRoom=" + IdRoom + "&forceNew=" + forceNew, function (game) {
             if (typeof (callback) == "function")
                 callback(game);
         });

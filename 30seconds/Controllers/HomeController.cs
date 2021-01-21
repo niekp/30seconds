@@ -39,10 +39,33 @@ namespace _30seconds.Controllers
                 .FirstOrDefaultAsync();
         }
 
+        private async Task<Room> CreateRoom(string Name, int IdWordlist, int AmountOfSeconds = 30) {
+            var room = new Room() {
+                Name = Name,
+                IdWordlist = IdWordlist,
+                AmountOfSeconds = AmountOfSeconds
+            };
+
+            gameContext.Add(room);
+            await gameContext.SaveChangesAsync();
+
+            return room;
+        }
+
         public async Task<IActionResult> Index()
         {
             return View(await GetRooms());
         }
+
+        [HttpPost]
+        public async Task<IActionResult> Index(LobbyViewModel lobbyViewModel) {
+            var room = await CreateRoom(lobbyViewModel.NewRoom.Name,
+                lobbyViewModel.NewRoom.IdWordlist,
+                lobbyViewModel.NewRoom.AmountOfSeconds
+            );
+
+            return RedirectToAction(nameof(Game), new { room.Id });
+		}
 
         public async Task<IActionResult> Game(int Id)
         {

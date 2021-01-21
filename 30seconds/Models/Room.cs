@@ -17,15 +17,18 @@ namespace _30seconds.Models
         [Key]
         public int Id { get; set; }
 
+        [Display(Name = "Naam")]
         public string Name { get; set; }
 
         public virtual ICollection<Game> Games { get; set; }
 
+        [Display(Name = "Woordenlijst")]
         public int IdWordlist { get; set; }
 
         [ForeignKey(nameof(IdWordlist))]
         public virtual Wordlist Wordlist { get; set; }
 
+        [Display(Name = "Aantal seconden")]
         public int AmountOfSeconds { get; set; }
 
         public DateTime Created { get; set; }

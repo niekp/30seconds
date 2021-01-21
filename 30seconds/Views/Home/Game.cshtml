@@ -1,6 +1,10 @@
-﻿@{
+﻿@model Room
+@{
     ViewData["Title"] = "30 Seconds";
 }
+
+<h1>@Model.Name</h1>
+<input type="hidden" asp-for="Id" data-id="room-id" />
 
 <div class="words" data-id="words">
     

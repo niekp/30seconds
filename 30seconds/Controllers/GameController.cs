@@ -9,8 +9,6 @@ using Microsoft.AspNetCore.Mvc;
 using _30seconds.Data;
 using Microsoft.EntityFrameworkCore;
 
-// For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-
 namespace _30seconds.Controllers
 {
     public class GameController : Controller
@@ -33,22 +31,31 @@ namespace _30seconds.Controllers
             //var words = System.IO.File.ReadAllLines("woordenlijst.txt");
         }
 
-        private Task<Game> GetNewGame(int IdRoom, string User)
+        private async Task<Game> GetNewGame(int IdRoom, string User)
         {
             var game = new Game()
             {
-                Words = GetWords(5),
                 IdRoom = IdRoom,
                 Start = DateTime.Now,
                 User = User
             };
+            foreach (var word in await GetWords(5)) {
+                game.Words.Add(word);
+			}
+
+            gameContext.Add(game);
+
+            await gameContext.SaveChangesAsync();
+
+            return game;
         }
 
         private async Task<Game> GetOrCreateGame(int IdRoom, string User)
         {
             var game = await gameContext.Game.Where(
                 g => g.IdRoom == IdRoom
-            ).LastOrDefaultAsync();
+            ).Include(g => g.Words)
+            .LastOrDefaultAsync();
 
             if (!(game is Game))
             {
@@ -58,29 +65,13 @@ namespace _30seconds.Controllers
             return game;
         }
 
-        public Game GetGame(int IdRoom, string User, bool forceNew = false)
+        public Task<Game> GetGame(int IdRoom, string User, bool forceNew = false)
         {
-            Game game = null;
-            if (System.IO.File.Exists(_filename) && !forceNew)
-            {
-                using StreamReader r = new StreamReader(_filename);
-                string json = r.ReadToEnd();
-                game = JsonConvert.DeserializeObject<Game>(json);
-            }
-
-            if (game is not Game) {
-                game = new Game()
-                {
-                    Words = GetWords(5),
-                    Start = DateTime.Now,
-                    User = User
-                };
-
-                var json = JsonConvert.SerializeObject(game, Formatting.Indented);
-                System.IO.File.WriteAllText(_filename, json);
-            }
-
-            return game;
+            if (!forceNew) {
+                return GetOrCreateGame(IdRoom, User);
+			} else {
+                return GetNewGame(IdRoom, User);
+			}
         }
 
     }
