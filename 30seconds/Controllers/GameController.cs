@@ -42,7 +42,7 @@ namespace _30seconds.Controllers
                 Start = DateTime.Now,
                 User = User
             };
-            foreach (var word in await GetWords(room.Id, 5)) {
+            foreach (var word in await GetWords(room.IdWordlist, 5)) {
                 game.Words.Add(word);
 			}
 
