@@ -21,25 +21,28 @@ namespace _30seconds.Controllers
         }
 
 
-        private Task<List<Word>> GetWords(int IdWordlist, int Amount = 5)
+        private async Task<List<Word>> GetWords(int IdWordlist, int Amount = 5)
         {
-            return gameContext.Word.Where(
+            return (await gameContext.Word.Where(
                 w => w.IdWordlist == IdWordlist
-            ).OrderBy(x => Guid.NewGuid()).Take(Amount)
-            .ToListAsync();
-
-            //var words = System.IO.File.ReadAllLines("woordenlijst.txt");
+            ).ToListAsync()).OrderBy(x => Guid.NewGuid()).Take(Amount)
+            .ToList();
         }
 
         private async Task<Game> GetNewGame(int IdRoom, string User)
         {
+            var room = await gameContext.Room.Where(r => r.Id == IdRoom).FirstOrDefaultAsync();
+            if (!(room is Room)) {
+                throw new ArgumentException("Invalid room.");
+			}
+
             var game = new Game()
             {
                 IdRoom = IdRoom,
                 Start = DateTime.Now,
                 User = User
             };
-            foreach (var word in await GetWords(5)) {
+            foreach (var word in await GetWords(room.Id, 5)) {
                 game.Words.Add(word);
 			}
 
@@ -55,7 +58,8 @@ namespace _30seconds.Controllers
             var game = await gameContext.Game.Where(
                 g => g.IdRoom == IdRoom
             ).Include(g => g.Words)
-            .LastOrDefaultAsync();
+            .OrderByDescending(g => g.Start)
+            .FirstOrDefaultAsync();
 
             if (!(game is Game))
             {

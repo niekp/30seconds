@@ -52,9 +52,19 @@ namespace _30seconds.Controllers
             return room;
         }
 
+        private Task<List<Wordlist>> GetWordlists() {
+            return gameContext.Wordlist.ToListAsync();
+		}
+
         public async Task<IActionResult> Index()
         {
-            return View(await GetRooms());
+            var lobby = new LobbyViewModel() {
+                Rooms = await GetRooms(),
+                NewRoom = new Room(),
+                Wordlists = await GetWordlists()
+            };
+
+            return View(lobby);
         }
 
         [HttpPost]

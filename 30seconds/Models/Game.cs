@@ -9,6 +9,7 @@ namespace _30seconds.Models
     {
         public Game()
         {
+            Words = new List<Word>();
         }
 
         [Key]

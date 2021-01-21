@@ -50,7 +50,7 @@
             if (game.user == getUser() || remaining < -2) {
                 $words.show();
                 game.words.forEach(function (word) {
-                    $words.append(word + "<br />")
+                    $words.append(word.text + "<br />")
                 })
             } else {
                 $words.hide();

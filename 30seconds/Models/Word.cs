@@ -7,8 +7,11 @@ namespace _30seconds.Models
 {
     public class Word
     {
-        public Word()
-        {
+        public Word() {
+        }
+        public Word(string Text, int IdWordlist) {
+            this.Text = Text;
+            this.IdWordlist = IdWordlist;
         }
 
         [Key]
