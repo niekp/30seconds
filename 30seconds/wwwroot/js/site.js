@@ -48,7 +48,6 @@
 	}
 
 	function gameHandler() {
-		console.log($rooms.length)
 		if (!$words.length) {
 			if ($rooms.length) {
 				$(".room-container").load(location.href + " .room-container .card");
@@ -61,9 +60,7 @@
 	}
 
 	function displayGame(game) {
-		if (!game) {
-			return;
-		}
+		if (!game) { return; }
 
 		$words.html("<ul class='list-group'></ul>");
 		var remaining = game.remaining.seconds;
