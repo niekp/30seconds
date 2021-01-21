@@ -52,9 +52,7 @@
 
 		var game = getGame(false, function (game) {
 			$words.html("<ul class='list-group'></ul>");
-			var start = new Date(game.start);
-			var timer = (new Date() - new Date(game.start)) / 1000;
-			var remaining = 31 - timer;
+			var remaining = game.remaining.seconds;
 
 			if (game.user == getUser() || remaining < -2) {
 				$words.show();
@@ -68,7 +66,7 @@
 
 
 			if (remaining >= 0) {
-				$timer.html(Math.round(31 - timer) + " seconden resterend");
+				$timer.html(game.remaining.seconds + " seconden resterend");
 			} else {
 				$timer.html("De tijd is voorbij!");
 			}

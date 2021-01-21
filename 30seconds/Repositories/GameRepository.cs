@@ -26,6 +26,7 @@ namespace _30seconds.Repositories {
 
 			var game = new Game() {
 				IdRoom = IdRoom,
+				Room = room,
 				Start = DateTime.Now,
 				User = User
 			};
@@ -45,6 +46,7 @@ namespace _30seconds.Repositories {
 			var game = await db.Game.Where(
 				g => g.IdRoom == IdRoom
 			).Include(g => g.Words)
+			.Include(g => g.Room)
 			.OrderByDescending(g => g.Start)
 			.FirstOrDefaultAsync();
 
