@@ -26,7 +26,7 @@ namespace _30seconds.Models {
 		[NotMapped]
 		public DateTime End {
 			get {
-				return Start.AddSeconds(Room is Room ? Room.AmountOfSeconds : 30);
+				return Start.AddSeconds(Room is Room ? Room.AmountOfSeconds : 30).AddMilliseconds(800);
 			}
 		}
 

@@ -3,6 +3,7 @@
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
     <RootNamespace>_30seconds</RootNamespace>
+    <UserSecretsId>c87d40c5-a965-4584-b7c3-e1ee54ae08e0</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
