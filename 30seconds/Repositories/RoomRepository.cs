@@ -16,7 +16,7 @@ namespace _30seconds.Repositories {
 
 		public Task<List<Room>> GetRooms() {
 			return db.Room.Where(
-				r => r.LastPing >= DateTime.Now.AddMinutes(-5)
+				r => r.Created >= DateTime.Now.AddMinutes(-5)
 				|| r.Games.Where(g => g.Start >= DateTime.Now.AddMinutes(-5)).Any()
 			).Include(r => r.Games).ToListAsync();
 		}

@@ -8,7 +8,6 @@ namespace _30seconds.Models {
 	public class Room {
 		public Room() {
 			Created = DateTime.Now;
-			LastPing = DateTime.Now;
 			AmountOfSeconds = 30;
 		}
 
@@ -18,6 +17,7 @@ namespace _30seconds.Models {
 		[Display(Name = "Naam")]
 		public string Name { get; set; }
 
+		[JsonIgnore]
 		public virtual ICollection<Game> Games { get; set; }
 
 		[Display(Name = "Woordenlijst")]
@@ -31,7 +31,5 @@ namespace _30seconds.Models {
 		public int AmountOfSeconds { get; set; }
 
 		public DateTime Created { get; set; }
-
-		public DateTime LastPing { get; set; }
 	}
 }
