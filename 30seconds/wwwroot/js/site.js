@@ -7,6 +7,7 @@
 	$(document).ready(function () {
 		$("[data-trigger='new-round']").on('click', newRound);
 
+		getGame(displayGame);
 		setInterval(gameHandler, 1000);
 	})
 
@@ -60,6 +61,10 @@
 	}
 
 	function displayGame(game) {
+		if (!game) {
+			return;
+		}
+
 		$words.html("<ul class='list-group'></ul>");
 		var remaining = game.remaining.seconds;
 
