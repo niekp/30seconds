@@ -11,13 +11,13 @@
 			<div class="card-body">
 				<h5 class="card-title">@room.Name</h5>
 				<p class="card-text">
-					Aangemaakt: @room.Created.ToString("HH:mm")
+					Aangemaakt: @room.Created.ToString("HH:mm")<br />
 					Aantal rondes: @room.Games.Count()<br />
 					@if (room.Games.Any()) {
 						<span>Laatste ronde: @room.Games.OrderBy(g => g.Start).LastOrDefault()?.Start.ToString("HH:mm:ss")</span><br />
 					}
 				</p>
-				<a asp-action="Game" asp-route-id="@room.Id" class="card-link stretched-link">Meedoen</a>
+				<a asp-action="Game" asp-route-id="@room.Id" class="btn btn-primary stretched-link">Meedoen</a>
 			</div>
 		</div>
 	}

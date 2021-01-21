@@ -10,6 +10,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore.Design;
+using _30seconds.Repositories;
 
 namespace _30seconds
 {
@@ -26,6 +27,10 @@ namespace _30seconds
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<GameContext>();
+            services.AddTransient<IWordRepository, WordRepository>();
+            services.AddTransient<IGameRepository, GameRepository>();
+            services.AddTransient<IRoomRepository, RoomRepository>();
+            services.AddTransient<IWordlistRepository, WordlistRepository>();
 
             services.AddControllersWithViews();
         }

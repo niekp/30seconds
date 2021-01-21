@@ -8,60 +8,30 @@ using Microsoft.Extensions.Logging;
 using _30seconds.Models;
 using _30seconds.Data;
 using Microsoft.EntityFrameworkCore;
+using _30seconds.Repositories;
 
 namespace _30seconds.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly GameContext gameContext;
+		private readonly IRoomRepository roomRepository;
+		private readonly IWordlistRepository wordlistRepository;
 
         public HomeController (
-            GameContext gameContext
+            IRoomRepository roomRepository,
+            IWordlistRepository wordlistRepository
         )
         {
-            this.gameContext = gameContext;
+			this.roomRepository = roomRepository;
+			this.wordlistRepository = wordlistRepository;
         }
-
-        // TODO: Verplaats naar een repo
-        private Task<List<Room>> GetRooms()
-        {
-            return gameContext.Room.Where(
-                r => r.LastPing >= DateTime.Now.AddMinutes(-5)
-                || r.Games.Where(g => g.Start >= DateTime.Now.AddMinutes(-5)).Any()
-            ).Include(r => r.Games).ToListAsync();
-        }
-
-        // TODO: Verplaats naar een repo
-        private Task<Room> GetRoom(int Id)
-        {
-            return gameContext.Room.Where(r => r.Id == Id)
-                .Include(r => r.Games)
-                .FirstOrDefaultAsync();
-        }
-
-        private async Task<Room> CreateRoom(string Name, int IdWordlist, int AmountOfSeconds = 30) {
-            var room = new Room() {
-                Name = Name,
-                IdWordlist = IdWordlist,
-                AmountOfSeconds = AmountOfSeconds
-            };
-
-            gameContext.Add(room);
-            await gameContext.SaveChangesAsync();
-
-            return room;
-        }
-
-        private Task<List<Wordlist>> GetWordlists() {
-            return gameContext.Wordlist.ToListAsync();
-		}
 
         public async Task<IActionResult> Index()
         {
             var lobby = new LobbyViewModel() {
-                Rooms = await GetRooms(),
+                Rooms = await roomRepository.GetRooms(),
                 NewRoom = new Room(),
-                Wordlists = await GetWordlists()
+                Wordlists = await wordlistRepository.GetWordlists()
             };
 
             return View(lobby);
@@ -69,7 +39,7 @@ namespace _30seconds.Controllers
 
         [HttpPost]
         public async Task<IActionResult> Index(LobbyViewModel lobbyViewModel) {
-            var room = await CreateRoom(lobbyViewModel.NewRoom.Name,
+            var room = await roomRepository.CreateRoom(lobbyViewModel.NewRoom.Name,
                 lobbyViewModel.NewRoom.IdWordlist,
                 lobbyViewModel.NewRoom.AmountOfSeconds
             );
@@ -79,7 +49,7 @@ namespace _30seconds.Controllers
 
         public async Task<IActionResult> Game(int Id)
         {
-            var room = await GetRoom(Id);
+            var room = await roomRepository.GetRoom(Id);
             if (!(room is Room))
             {
                 return RedirectToAction(nameof(Index));

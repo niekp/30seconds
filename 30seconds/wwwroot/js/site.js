@@ -58,6 +58,7 @@
 
             if (game.user == getUser() || remaining < -2) {
                 $words.show();
+                game.words.sort(compareWords);
                 game.words.forEach(function (word) {
                     $words.find("ul").append("<li class='list-group-item'>" + word.text + "</li>")
                 })
@@ -72,6 +73,16 @@
                 $timer.html("De tijd is voorbij!");
             }
         });
+    }
+
+    function compareWords(a, b) {
+        if (a.text < b.text) {
+            return -1;
+        }
+        if (a.text > b.text) {
+            return 1;
+        }
+        return 0;
     }
 
 })(jQuery);
