@@ -1,11 +1,7 @@
-using System;
+namespace _30seconds.Models {
+	public class ErrorViewModel {
+		public string RequestId { get; set; }
 
-namespace _30seconds.Models
-{
-    public class ErrorViewModel
-    {
-        public string RequestId { get; set; }
-
-        public bool ShowRequestId => !string.IsNullOrEmpty(RequestId);
-    }
+		public bool ShowRequestId => !string.IsNullOrEmpty(RequestId);
+	}
 }
