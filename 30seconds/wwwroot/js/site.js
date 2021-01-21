@@ -1,6 +1,7 @@
 ﻿(function ($) {
     var $words = $("[data-id='words']"),
         $timer = $("[data-id='timer']"),
+        $rooms = $(".room-container"),
         IdRoom = $("[data-id='room-id']").val();
 
     $(document).ready(function () {
@@ -40,6 +41,14 @@
     }
 
     function gameHandler() {
+        console.log($rooms.length)
+        if (!$words.length) {
+            if ($rooms.length) {
+                $(".room-container").load(location.href + " .room-container .card");
+            }
+
+            return;
+        }
 
         var game = getGame(false, function (game) {
             $words.html("<ul class='list-group'></ul>");

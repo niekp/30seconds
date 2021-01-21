@@ -1,17 +1,18 @@
 ﻿@model Room
 @{
-    ViewData["Title"] = "30 Seconds";
+	ViewData["Title"] = "30 Seconds";
 }
 
 <h1>@Model.Name</h1>
 <input type="hidden" asp-for="Id" data-id="room-id" />
 
 <div class="words" data-id="words">
-    
+
 </div>
 <div class="timer" data-id="timer">
 
 </div>
 <div class="buttons">
-    <input type="button" data-trigger="new-round" class="btn btn-primary" value="Start ronde" />
+	<input type="button" data-trigger="new-round" class="btn btn-primary" value="Start ronde" />
+	<a asp-controller="Home" asp-action="Index" class="btn btn-primary">Terug</a>
 </div>
