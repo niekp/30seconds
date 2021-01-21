@@ -42,19 +42,13 @@ namespace _30seconds.Repositories {
 			return game;
 		}
 
-		public async Task<Game> GetOrCreateGame(int IdRoom, string User) {
-			var game = await db.Game.Where(
+		public Task<Game> GetGame(int IdRoom) {
+			return db.Game.Where(
 				g => g.IdRoom == IdRoom
 			).Include(g => g.Words)
 			.Include(g => g.Room)
 			.OrderByDescending(g => g.Start)
 			.FirstOrDefaultAsync();
-
-			if (!(game is Game)) {
-				game = await GetNewGame(IdRoom, User);
-			}
-
-			return game;
 		}
 	}
 }

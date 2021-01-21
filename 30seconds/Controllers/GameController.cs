@@ -14,12 +14,12 @@ namespace _30seconds.Controllers {
 		}
 
 
-		public Task<Game> GetGame(int IdRoom, string User, bool forceNew = false) {
-			if (!forceNew) {
-				return gameRepository.GetOrCreateGame(IdRoom, User);
-			} else {
-				return gameRepository.GetNewGame(IdRoom, User);
-			}
+		public Task<Game> GetGame(int IdRoom) {
+			return gameRepository.GetGame(IdRoom);
+		}
+
+		public Task<Game> CreateGame(int IdRoom, string User) {
+			return gameRepository.GetNewGame(IdRoom, User);
 		}
 
 	}
