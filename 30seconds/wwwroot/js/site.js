@@ -42,7 +42,7 @@
     function gameHandler() {
 
         var game = getGame(false, function (game) {
-            $words.html("");
+            $words.html("<ul class='list-group'></ul>");
             var start = new Date(game.start);
             var timer = (new Date() - new Date(game.start)) / 1000;
             var remaining = 31 - timer;
@@ -50,7 +50,7 @@
             if (game.user == getUser() || remaining < -2) {
                 $words.show();
                 game.words.forEach(function (word) {
-                    $words.append(word.text + "<br />")
+                    $words.find("ul").append("<li class='list-group-item'>" + word.text + "</li>")
                 })
             } else {
                 $words.hide();

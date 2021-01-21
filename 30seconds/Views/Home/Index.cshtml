@@ -24,25 +24,31 @@
 </div>
 
 @using (Html.BeginForm()) {
-	<div class="mb-3">
-		<label asp-for="NewRoom.Name" class="form-label"></label>
-		<input asp-for="NewRoom.Name" class="form-control" />
+	<div class="form-group row">
+		<label asp-for="NewRoom.Name" class="col-sm-2 form-label"></label>
+		<div class="col-sm-10">
+			<input asp-for="NewRoom.Name" class="form-control" />
+		</div>
 	</div>
 
-	<div class="mb-3">
-		<label asp-for="NewRoom.AmountOfSeconds" class="form-label"></label>
-		<input asp-for="NewRoom.AmountOfSeconds" class="form-control" />
+	<div class="form-group row">
+		<label asp-for="NewRoom.AmountOfSeconds" class="col-sm-2 form-label"></label>
+		<div class="col-sm-10">
+			<input asp-for="NewRoom.AmountOfSeconds" class="form-control" />
+		</div>
 	</div>
 
-	<div class="mb-3">
-		<label asp-for="NewRoom.IdWordlist" class="form-label"></label>
-		<select class="form-select" asp-for="NewRoom.IdWordlist" asp-items="Model.Wordlists.Select(l => new SelectListItem() {
-			Text = l.Title,
-			Value = l.Id.ToString()
-		})">
-		</select>
+	<div class="form-group row">
+		<label asp-for="NewRoom.IdWordlist" class="col-sm-2 form-label"></label>
+		<div class="col-sm-10">
+			<select class="form-select" asp-for="NewRoom.IdWordlist" asp-items="Model.Wordlists.Select(l => new SelectListItem() {
+				Text = l.Title,
+				Value = l.Id.ToString()
+			})">
+			</select>
+		</div>
 	</div>
-
+	
 	<div class="mb-3">
 		<input type="submit" value="Open kamer" class="btn btn-primary" />
 	</div>
